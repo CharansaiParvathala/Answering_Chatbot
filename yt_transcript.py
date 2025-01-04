@@ -51,6 +51,8 @@ def main():
             <style>
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
+            header {visibility: hidden;}
+            MainMenu {visibility: hidden}
             .reportview-container .main footer {visibility: hidden;}
             </style>
             """
