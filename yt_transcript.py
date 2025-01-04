@@ -51,7 +51,7 @@ def main():
             <style>
             #MainMenu {visibility: hidden;}
             footer {visibility: hidden;}
-            header {visibility: hidden;}
+            .reportview-container .main footer {visibility: hidden;}
             </style>
             """
     st.markdown(hide_st_style, unsafe_allow_html=True)
