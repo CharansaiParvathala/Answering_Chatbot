@@ -192,7 +192,7 @@ def main():
                 st.session_state.text = download_subtitles(url)
     
 
-    footer = """<br><br><hr><p style="text-align:center; background-color: rgba(0, 255, 255, 0.3);"><b>© 2025 <a href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">CharanSai</a></b></p><hr>"""
+    footer = """<br><br><hr><p style="text-align:center; background-color: rgba(169, 169, 169, 0.2);"><b>© 2025 <a href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">CharanSai</a></b></p><hr>"""
 
     # Sidebar description text without colors
     st.sidebar.write("""
