@@ -50,12 +50,38 @@ def main():
     hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
             header {visibility: hidden;}
             MainMenu {visibility: hidden}
             .reportview-container .main footer {visibility: hidden;}
             </style>
             """
+    footer="""<style>
+a:link , a:visited{
+color: blue;
+background-color: transparent;
+text-decoration: underline;
+}
+
+a:hover,  a:active {
+color: red;
+background-color: transparent;
+text-decoration: underline;
+}
+
+.footer {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: grey;
+color: white;
+text-align: center;
+}
+</style>
+<div class="footer">
+<p>Developed with ❤ by <a style='display: block; text-align: center;' href="https://www.heflin.dev/" target="_blank">Heflin Stephen Raj S</a></p>
+</div>
+"""
     st.markdown(hide_st_style, unsafe_allow_html=True)
     emp = st.empty()
     if 'text' not in st.session_state:
@@ -175,40 +201,8 @@ def main():
                             with st.chat_message('assistant'):
                                 st.write(model_message)
 
-
-
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
-        import streamlit as st
-
-footer="""<style>
-a:link , a:visited{
-color: blue;
-background-color: transparent;
-text-decoration: underline;
-}
-
-a:hover,  a:active {
-color: red;
-background-color: transparent;
-text-decoration: underline;
-}
-
-.footer {
-position: fixed;
-left: 0;
-bottom: 0;
-width: 100%;
-background-color: white;
-color: black;
-text-align: center;
-}
-</style>
-<div class="footer">
-<p>Developed by <a style='display: block; text-align: center;' href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">Charan_sai</a></p>
-</div>
-"""
-st.markdown(footer,unsafe_allow_html=True)
-
+    st.markdown(footer,unsafe_allow_html=True)
 if __name__ == '__main__':
     main()
