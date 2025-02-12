@@ -57,49 +57,48 @@ def main():
             """
     footer = """
 <style>
-:root {
-    --footer-bg: rgba(0, 0, 0, 0.8);  /* Dark background */
-    --footer-text: #f0f0f0;  /* Light text */
-    --footer-link: #1E90FF;  /* Bright blue for links */
-    --footer-hover: #FF4500;  /* Orange for hover */
-}
-
-/* Light mode adjustments */
-@media (prefers-color-scheme: light) {
-    :root {
-        --footer-bg: rgba(240, 240, 240, 0.8);  /* Light background */
-        --footer-text: #333;  /* Dark text */
-        --footer-link: #007BFF;  /* Blue for links */
-        --footer-hover: #FF5733;  /* Reddish hover */
-    }
-}
-
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+.sidebar-footer {
+    position: absolute;
+    bottom: 40px; /* Adjusted to stay above the Streamlit menu */
+    left: 50%;
+    transform: translateX(-50%);
     width: 100%;
-    background-color: var(--footer-bg);
-    color: var(--footer-text);
     text-align: center;
-    padding: 10px;
     font-size: 14px;
     font-weight: bold;
+    color: var(--footer-text);
 }
 
-.footer a {
+/* Link styles */
+.sidebar-footer a {
     color: var(--footer-link);
     text-decoration: none;
     font-weight: bold;
 }
 
-.footer a:hover {
+.sidebar-footer a:hover {
     color: var(--footer-hover);
+}
+
+/* Light & Dark Theme Support */
+:root {
+    --footer-text: #f0f0f0;
+    --footer-link: #1E90FF;
+    --footer-hover: #FF4500;
+}
+
+/* Adjust for Light Mode */
+@media (prefers-color-scheme: light) {
+    :root {
+        --footer-text: #333;
+        --footer-link: #007BFF;
+        --footer-hover: #FF5733;
+    }
 }
 </style>
 
-<div class="footer">
-    <p>© 2025 <a href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">Charan Sai</a></p>
+<div class="sidebar-footer">
+    <p>© 2025 <a href="https://www.charansai.com/" target="_blank">Charan Sai</a></p>
 </div>
 """
     st.markdown(hide_st_style, unsafe_allow_html=True)
