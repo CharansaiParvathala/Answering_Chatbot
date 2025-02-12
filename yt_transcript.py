@@ -106,7 +106,7 @@ def main():
             </style>
 
             """
-    st.markdown('<h1 style="font-size:33px; text-align:center;"><span style="color:blue;">PDF</span> & <span style="color:red;">YouTube</span> ChatBot</h1><hr>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-size:32px; text-align:center;"><span style="color:blue;">PDF</span> & <span style="color:red;">YouTube</span> ChatBot</h1><hr>', unsafe_allow_html=True)
     st.markdown(hide_st, unsafe_allow_html=True)
 
     emp = st.empty()
@@ -192,7 +192,7 @@ def main():
                 st.session_state.text = download_subtitles(url)
     
 
-    footer = """<br><br><hr><p style="text-align:center; background-color: rgba(0, 0, 255, 0.2);">© 2025 <a href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">CharanSai</a></p><hr>"""
+    footer = """<br><br><hr><p style="text-align:center; background-color: rgba(0, 255, 255, 0.3);"><b>© 2025 <a href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">CharanSai</a></b></p><hr>"""
 
     # Sidebar description text without colors
     st.sidebar.write("""
