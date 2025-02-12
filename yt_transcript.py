@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit as st 
 import PyPDF2 as pp
 import google.generativeai as gemini
 import re
@@ -44,6 +44,7 @@ def download_subtitles(video_url, lang='en'):
                     st.warning("No subtitles found after cleaning.")
             else:
                 st.warning(f"No subtitles available in '{lang}' for this video.")
+
     except Exception as e:
         st.error("Please Provide Valid YouTube URL")
     return ""
@@ -57,6 +58,7 @@ def main():
             .reportview-container .main footer {visibility: hidden;}
             </style>
             """
+
     footer = """
     <style>
     [data-testid="stSidebar"] {
@@ -97,51 +99,53 @@ def main():
         <p>© 2025 <a href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">Charan Sai</a></p>
     </div>
     """
-    st.markdown(hide_st_style, unsafe_allow_html=True)
 
+    st.markdown(hide_st_style, unsafe_allow_html=True)
     emp = st.empty()
 
     if 'text' not in st.session_state:
         st.session_state.text = ""
-
     if 'history' not in st.session_state:
         st.session_state.history = []
-
     if 'first_time' not in st.session_state:
         st.session_state.first_time = True
-
     if 'radio_option' not in st.session_state:
         st.session_state.radio_option = None
-
     if 'vid' not in st.session_state:
         st.session_state.vid = None
-
     if 'pd' not in st.session_state:
         st.session_state.pd = None
 
-    # Sidebar UI
-    st.sidebar.title("Ask Anything from PDFs & YouTube Video's")
     mode = st.sidebar.radio('Select Your Query Mode', ['YouTube', 'PDF'], index=0)
 
-    st.sidebar.markdown("<h3 style='color:blue;'>PDF Mode:</h3>", unsafe_allow_html=True)
-    st.sidebar.write("""
-    Upload your PDF or provide the link. After a few seconds, the question input field will appear. Type your question, and get answers from the document.
-    """)
-
-    st.sidebar.markdown("<h3 style='color:red;'>YouTube Mode:</h3>", unsafe_allow_html=True)
-    st.sidebar.write("""
-    Paste the YouTube video link. Wait a few seconds for the question input field to show up, then ask your question and get answers from the video.
-    """)
-
-    st.sidebar.markdown(footer, unsafe_allow_html=True)
-
-    # Logic for PDF and YouTube Modes
     if not st.session_state.radio_option == mode:
         st.session_state.first_time = True
         st.session_state.history = []
         st.session_state.radio_option = mode
 
     pdfile = url = None
+
+    # Main page title with colors
+    st.title("Ask Anything from PDFs & YouTube Videos")
+    if mode == 'PDF':
+        st.markdown('<h2 style="color:blue;">PDF Mode</h2>', unsafe_allow_html=True)
+    elif mode == 'YouTube':
+        st.markdown('<h2 style="color:red;">YouTube Mode</h2>', unsafe_allow_html=True)
+
+    # Sidebar description text without colors
+    st.sidebar.write("""
+    ### PDF Mode
+    Upload your PDF or provide the link. After a few seconds, the question input field will appear.
+    Type your question, and get answers from the document.
+    """)
+    
+    st.sidebar.write("""
+    ### YouTube Mode
+    Paste the YouTube video link. Wait a few seconds for the question input field to show up, 
+    then ask your question and get answers from the video.
+    """)
+
+    st.sidebar.markdown(footer, unsafe_allow_html=True)
 
     if mode == 'PDF':
         pdfile = st.file_uploader('Upload Your PDF', type='pdf')
@@ -172,6 +176,7 @@ def main():
             "max_output_tokens": 8192,
             "response_mime_type": "text/plain",
         }
+
         model = gemini.GenerativeModel(
             model_name="gemini-1.5-flash",
             generation_config=generation_config,
@@ -180,7 +185,7 @@ def main():
                 "Use the source text to answer questions. "
                 "If the answer to a question is not found in the provided text, respond using your own knowledge "
                 "and clearly state that the answer is not found in the text content and is AI-generated."
-                f"source text : {st.session_state.text}"
+                f"source text: {st.session_state.text}"
             ),
         )
 
@@ -200,7 +205,6 @@ def main():
                     user_message = user_entry.get('parts', ['No message'])[0]
                     with st.chat_message('user'):
                         st.write(user_message)
-
                     if model_entry:
                         model_message = model_entry.get('parts', ['No message'])[0]
                         with st.chat_message('assistant'):
