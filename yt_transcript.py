@@ -55,31 +55,51 @@ def main():
             .reportview-container .main footer {visibility: hidden;}
             </style>
             """
-    footer="""<style>
-a:link , a:visited{
-color: blue;
-background-color: transparent;
-text-decoration: underline;
+    footer = """
+<style>
+:root {
+    --footer-bg: rgba(0, 0, 0, 0.8);  /* Dark background */
+    --footer-text: #f0f0f0;  /* Light text */
+    --footer-link: #1E90FF;  /* Bright blue for links */
+    --footer-hover: #FF4500;  /* Orange for hover */
 }
 
-a:hover,  a:active {
-color: red;
-background-color: transparent;
-text-decoration: underline;
+/* Light mode adjustments */
+@media (prefers-color-scheme: light) {
+    :root {
+        --footer-bg: rgba(240, 240, 240, 0.8);  /* Light background */
+        --footer-text: #333;  /* Dark text */
+        --footer-link: #007BFF;  /* Blue for links */
+        --footer-hover: #FF5733;  /* Reddish hover */
+    }
 }
 
 .footer {
-position: fixed;
-left: 0;
-bottom: 0;
-width: 100%;
-background-color: grey;
-color: white;
-text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.footer a {
+    color: var(--footer-link);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer a:hover {
+    color: var(--footer-hover);
 }
 </style>
+
 <div class="footer">
-<p>Developed with ❤ by <a style='display: block; text-align: center;' href="https://www.heflin.dev/" target="_blank">Heflin Stephen Raj S</a></p>
+    <p>© 2025 <a href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">Charan Sai</a></p>
 </div>
 """
     st.markdown(hide_st_style, unsafe_allow_html=True)
