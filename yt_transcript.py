@@ -44,7 +44,6 @@ def download_subtitles(video_url, lang='en'):
                     st.warning("No subtitles found after cleaning.")
             else:
                 st.warning(f"No subtitles available in '{lang}' for this video.")
-
     except Exception as e:
         st.error("Please Provide Valid YouTube URL")
     return ""
@@ -61,42 +60,28 @@ def main():
 
     footer = """
     <style>
-    [data-testid="stSidebar"] {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        padding-bottom: 50px;
+    a:link , a:visited{
+        color: blue;
+        background-color: transparent;
+        text-decoration: underline;
     }
-    .sidebar-footer {
+    a:hover,  a:active {
+        color: red;
+        background-color: transparent;
+        text-decoration: underline;
+    }
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: grey;
+        color: white;
         text-align: center;
-        font-size: 14px;
-        font-weight: bold;
-        padding: 10px 0;
-        color: var(--footer-text);
-    }
-    .sidebar-footer a {
-        color: var(--footer-link);
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .sidebar-footer a:hover {
-        color: var(--footer-hover);
-    }
-    :root {
-        --footer-text: #f0f0f0;
-        --footer-link: #1E90FF;
-        --footer-hover: #FF4500;
-    }
-    @media (prefers-color-scheme: light) {
-        :root {
-            --footer-text: #333;
-            --footer-link: #007BFF;
-            --footer-hover: #FF5733;
-        }
     }
     </style>
-    <div class="sidebar-footer">
-        <p>© 2025 <a href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">Charan Sai</a></p>
+    <div class="footer">
+        <p>Developed with ❤ by <a style='display: block; text-align: center;' href="https://www.heflin.dev/" target="_blank">Heflin Stephen Raj S</a></p>
     </div>
     """
 
@@ -125,24 +110,6 @@ def main():
 
     pdfile = url = None
 
-    # Single heading with colors for 'PDF' and 'YouTube'
-    st.markdown('<h1 style="font-size:32px; text-align:center;"><span style="color:blue;">PDF</span> & <span style="color:red;">Youtube</span> ChatBot</h1>', unsafe_allow_html=True)
-
-    # Sidebar description text without colors
-    st.sidebar.write("""
-    ### PDF Mode
-    Upload your PDF or provide the link. After a few seconds, the question input field will appear.
-    Type your question, and get answers from the document.
-    """)
-    
-    st.sidebar.write("""
-    ### YouTube Mode
-    Paste the YouTube video link. Wait a few seconds for the question input field to show up, 
-    then ask your question and get answers from the video.
-    """)
-
-    st.sidebar.markdown(footer, unsafe_allow_html=True)
-
     if mode == 'PDF':
         pdfile = st.file_uploader('Upload Your PDF', type='pdf')
         if pdfile and (st.session_state.pd != pdfile):
@@ -165,6 +132,7 @@ def main():
 
     if st.session_state.text:
         gemini.configure(api_key="AIzaSyDBWGGve2AxQJ0i6qjDzX0YdDNmvrQzTxs")
+
         generation_config = {
             "temperature": 1,
             "top_p": 0.95,
@@ -180,8 +148,12 @@ def main():
                 "You are a teacher who answers every question asked by the user. "
                 "Use the source text to answer questions. "
                 "If the answer to a question is not found in the provided text, respond using your own knowledge "
-                "and clearly state that the answer is not found in the text content and is AI-generated."
-                f"source text: {st.session_state.text}"
+                "and clearly state that the answer is not found in the text content and is AI-generated. "
+                "If user ask anything related to quize or multi choice questions based on your instruction text response in this format:"
+                "<q>question1<o>option1<o>option2<o>option3<o>option4<o>correct answer<q>question<o>option1<o>option2<o>option3<o>option4<o>correct answer "
+                "Example:<q>which one is eatable<o>cycle<o>car<o>carrot<o>sand<o>carrot don't add any extra other than this for quiz "
+                "if user dont mention anything about quiz just create your own question from source text given below"
+                f"source text : {st.session_state.text}"
             ),
         )
 
@@ -189,6 +161,7 @@ def main():
         try:
             chat_session = model.start_chat(history=st.session_state.history)
             query = emp.chat_input("Ask your question:")
+
             if query:
                 response = chat_session.send_message(query)
                 st.session_state.history.append({'role': 'user', 'parts': [query]})
@@ -202,12 +175,43 @@ def main():
                     with st.chat_message('user'):
                         st.write(user_message)
                     if model_entry:
+                        qna = []
                         model_message = model_entry.get('parts', ['No message'])[0]
-                        with st.chat_message('assistant'):
-                            st.write(model_message)
+
+                        if model_message.startswith('<q>'):
+                            quiz = model_message.split('<q>')
+                            qna = [q.split("<o>") for q in quiz if q.strip()]
+
+                            with st.chat_message('assistant'):
+                                with st.expander("SMART QUIZ"):
+                                    for q in qna:
+                                        q = [item.strip() for item in q if item.strip()]
+
+                                        if len(q) == 6:
+                                            question_text = q[0]
+                                            options = ["Select an option"] + q[1:5]
+                                            correct_answer = q[5]
+
+                                            selected_option = st.radio(question_text, options, index=0)
+
+                                            if selected_option != "Select an option":
+                                                if selected_option == correct_answer:
+                                                    st.success("Correct!")
+                                                else:
+                                                    st.error(f"Incorrect! The correct answer is: {correct_answer}")
+                                            else:
+                                                st.info("Please select an option.")
+                                        else:
+                                            st.warning(f"Invalid question format: {q}")
+
+                        else:
+                            with st.chat_message('assistant'):
+                                st.write(model_message)
 
         except Exception as e:
             st.error(f"An error occurred: {str(e)}")
+
+    st.markdown(footer, unsafe_allow_html=True)
 
 if __name__ == '__main__':
     main()
