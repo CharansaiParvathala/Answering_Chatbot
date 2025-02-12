@@ -106,7 +106,6 @@ def main():
     <p>© 2025 <a href="https://www.charansai.com/" target="_blank">Charan Sai</a></p>
 </div>
 """
-
     st.markdown(hide_st_style, unsafe_allow_html=True)
     emp = st.empty()
     if 'text' not in st.session_state:
