@@ -95,7 +95,7 @@ def download_subtitles(video_url, lang='en'):
 
 def main():
 
-    hide_st_style = """
+    hide_st = """
 
             <style>
 
@@ -103,15 +103,11 @@ def main():
 
             header {visibility: hidden;}
 
-            MainMenu {visibility: hidden}
-
-            .reportview-container .main footer {visibility: hidden;}
-
             </style>
 
             """
 
-    st.markdown(hide_st_style, unsafe_allow_html=True)
+    st.markdown(hide_st, unsafe_allow_html=True)
 
     emp = st.empty()
 
@@ -177,8 +173,6 @@ def main():
 
                     st.session_state.text += page.extract_text()
 
-
-
     if mode == 'YouTube':
 
         url = st.text_input('Enter Your YouTube Video URL:')
@@ -196,9 +190,24 @@ def main():
             with st.spinner('Extracting information from YouTube..'):
 
                 st.session_state.text = download_subtitles(url)
+    
 
+    footer = """<p style="text-align:center;">© 2025 <a href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">CharanSai</a></p>"""
+    st.markdown('<h1 style="font-size:33px; text-align:center;"><span style="color:blue;">PDF</span> & <span style="color:red;">YouTube</span> ChatBot</h1>', unsafe_allow_html=True)
 
-
+    # Sidebar description text without colors
+    st.sidebar.write("""
+    ### PDF Mode
+    Upload your PDF or provide the link. After a few seconds, the question input field will appear.
+    Type your question, and get answers from the document.
+    """)
+    
+    st.sidebar.write("""
+    ### YouTube Mode
+    Paste the YouTube video link. Wait a few seconds for the question input field to show up, 
+    then ask your question and get answers from the video.
+    """)
+    st.sidebar.markdown(footer, unsafe_allow_html=True)
     if st.session_state.text:
 
         gemini.configure(api_key="AIzaSyDBWGGve2AxQJ0i6qjDzX0YdDNmvrQzTxs")
