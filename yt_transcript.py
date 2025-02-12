@@ -57,15 +57,20 @@ def main():
             """
     footer = """
 <style>
+/* Sidebar container adjustments */
+[data-testid="stSidebar"] {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 50px; /* Adjust to prevent overlap with Streamlit menu */
+}
+
+/* Footer styling inside the sidebar */
 .sidebar-footer {
-    position: absolute;
-    bottom: 40px; /* Adjusted to stay above the Streamlit menu */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
     text-align: center;
     font-size: 14px;
     font-weight: bold;
+    padding: 10px 0;
     color: var(--footer-text);
 }
 
@@ -101,6 +106,7 @@ def main():
     <p>© 2025 <a href="https://www.charansai.com/" target="_blank">Charan Sai</a></p>
 </div>
 """
+
     st.markdown(hide_st_style, unsafe_allow_html=True)
     emp = st.empty()
     if 'text' not in st.session_state:
