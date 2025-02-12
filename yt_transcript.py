@@ -237,13 +237,13 @@ def main():
 
                 "and clearly state that the answer is not found in the text content and is AI-generated."
 
-                "If user type /quiz must give response based on your instruction text in this format:"
+                "If user type the command /quiz must give response based on your instruction text in this format:"
 
                 "<q>question1<o>option1<o>option2<o>option3<o>option4<o>correct answer<q>question<o>option1<o>option2<o>option3<o>option4<o>correct answer"
 
                 "Example:<q>which one is eatable<o>cycle<o>car<o>carrot<o>sand<o>carrot dont add any extra other than this for quiz"
 
-                "give me response exactly like this in specified format remember every responce to quiz must start with <q>"
+                "give me response exactly like this in specified format remember every responce to command /quiz must start with <q>"
 
                 f"source text : {st.session_state.text}"
 
