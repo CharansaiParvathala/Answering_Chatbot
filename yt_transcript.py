@@ -103,7 +103,7 @@ def main():
 </style>
 
 <div class="sidebar-footer">
-    <p>© 2025 <a href="https://www.charansai.com/" target="_blank">Charan Sai</a></p>
+    <p>© 2025 <a href="https://www.linkedin.com/in/charansai-parvathala" target="_blank">Charan Sai</a></p>
 </div>
 """
     st.markdown(hide_st_style, unsafe_allow_html=True)
