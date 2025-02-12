@@ -126,7 +126,7 @@ def main():
     pdfile = url = None
 
     # Single heading with colors for 'PDF' and 'YouTube'
-    st.markdown('<h1 style="font-size:36px;">PDF <span style="color:blue;">&</span> YouTube <span style="color:red;">ChatBot</span></h1>', unsafe_allow_html=True)
+    st.markdown('<h1 style="font-size:36px;"><span style="color:blue;">PDF</span> & <span style="color:red;">Youtube</span> ChatBot</h1>', unsafe_allow_html=True)
 
     # Sidebar description text without colors
     st.sidebar.write("""
