@@ -125,12 +125,8 @@ def main():
 
     pdfile = url = None
 
-    # Main page title with colors
-    st.title("Ask Anything from PDFs & YouTube Videos")
-    if mode == 'PDF':
-        st.markdown('<h2 style="color:blue;">PDF Mode</h2>', unsafe_allow_html=True)
-    elif mode == 'YouTube':
-        st.markdown('<h2 style="color:red;">YouTube Mode</h2>', unsafe_allow_html=True)
+    # Single heading with colors for 'PDF' and 'YouTube'
+    st.markdown('<h1 style="font-size:36px;">PDF <span style="color:blue;">&</span> YouTube <span style="color:red;">ChatBot</span></h1>', unsafe_allow_html=True)
 
     # Sidebar description text without colors
     st.sidebar.write("""
