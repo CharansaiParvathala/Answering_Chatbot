@@ -209,10 +209,7 @@ def main():
     st.sidebar.markdown(footer, unsafe_allow_html=True)
     if st.session_state.text:
 
-        gemini.configure(api_key="AIzaSyDBWGGve2AxQJ0i6qjDzX0YdDNmvrQzTxs")
-
-
-
+        gemini.configure(api_key= st.secrets["GenAI_Key"])
         generation_config = {
 
             "temperature": 1,
